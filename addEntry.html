@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Produkt hinzuf&uuml;gen</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/stylesheet.css">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+                <img class="navbar-brand" src="images/icon.jpg" alt="brand-logo" />
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Start</a></li>
+                    <li><a id="contact" href="kontakt.html">Kontakt</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="registration.html"><span class="glyphicon glyphicon-user"></span> Registrieren</a></li>
+                    <li><a href="anmelden.html"><span class="glyphicon glyphicon-log-in"></span> Anmelden</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page content -->
+    <div class="container">
+        <div class="productInformation">
+            <div class="categories">
+                <h3>Kategorien</h3>
+                <div class="row">
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <select name="category" id="categoryList" class="form-control categoryList"></select>
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2">
+                        <button class="btn btn-danger" id="deleteCategoryBtn">Kategorie l&ouml;schen</button>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4">
+                        <input type="text" name="categoryText" id="categoryText" required class="form-control" placeholder="Neue Kategorie">
+                    </div>
+                    <div class="col-xs-2 col-sm-2 col-md-2">
+                        <button class="btn btn-success" id="addCategoryBtn">Neue Kategorie hinzuf&uuml;gen</button>
+                    </div>
+                </div>
+            </div>
+            <div class="products">
+                <h3> Neues Produkt hinzuf&uuml;gen</h3>
+                <div class="row">
+                    <div class="col-xs-9 col-sm-9 col-md-9" id="productForm">
+                        <label for="productsCategoryList">Wählen Sie eine Kategorie:</label>
+                        <select name="category" id="productsCategoryList" class="form-control categoryList"></select>
+                        <label for="productTitle">Angaben zum Produkt:</label>
+                        <input type="text" required name="productTitle" id="productTitle" class="form-control" placeholder="Produkttitel" />
+                        <input type="text" required name="productImg" id="productImg" class="form-control" placeholder="Produktbild" />
+                        <input type="text" required name="productDesc" id="productDesc" class="form-control" placeholder="Produktbeschreibung" />
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <button class="btn btn-success" id="addProductBtn">Neues Produkt hinzuf&uuml;gen</button>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                <div class="col-xs-9 col-sm-9 col-md-9">
+                    <table id="productTable" class="table">
+                        <tr>
+                            <th>Produkttitel</th>
+                            <th>Produktbild</th>
+                            <th>Produktbeschreibung</th>
+                            <th>Kategorie-ID</th>
+                            <th></th>
+                        </tr>
+                    </table>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
