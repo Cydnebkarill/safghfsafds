@@ -8,8 +8,7 @@ function insertGame(){
         doz: $("#dozent").val()
       },
       success: function(data) {
-         alert(data);
-         $("#gameUrl").val("Die Spiel-ID lautet: " + data.toString());
+        $("#gameUrl").html("Die Spiel-ID lautet: " + data.toString());
       },
       error: function(data) {
         alert("Fehler: "+ data.toString());
@@ -18,6 +17,9 @@ function insertGame(){
 }
 
 function insertTeam(){
+  localStorage.gameId = $("#gameId").val();
+  localStorage.round = 1;
+  localStorage.delivery = 1;
 	$.ajax({
       type: "POST",
       dataType: "text",
@@ -28,31 +30,8 @@ function insertTeam(){
 		    gameId: $("#gameId").val()
       },
       success: function(data) {
-		 localStorage.teamId = data;
-		 localStorage.round = 1;
-     localStorage.delivery = 1;
-		 window.location.href = "game.html";
-      },
-      error: function(data) {
-        alert("Fehler: "+data.toString());
-      }
-    });
-}
-
-function insertRound(){
-
-  $.ajax({
-      type: "POST",
-      dataType: "text",
-      url: "insert.php",
-      data: {
-        func: "insertRound",
-        teamId: localStorage.teamId,
-		    round: localStorage.round
-      },
-      success: function(data) {
-         localStorage.roundId = data;
-		     $('#roundTitle').html("Runde "+localStorage.round);
+        localStorage.teamId = data;
+        window.location.href = "game.html";
       },
       error: function(data) {
         alert("Fehler: "+data.toString());
@@ -63,8 +42,7 @@ function insertRound(){
 function insertDelivery(){
 	pass = parseInt($("#r" + localStorage.delivery + "p").val());
 	fail = parseInt($("#r" + localStorage.delivery + "f").val());
-	demand = pass + fail;
-	$("#r" + localStorage.delivery + "t").val(demand);
+	demand = parseInt($("#r" + localStorage.delivery + "d").val());
 
 	$.ajax({
       type: "POST",
@@ -72,10 +50,12 @@ function insertDelivery(){
       url: "insert.php",
       data: {
         func: "insertDelivery",
-		roundId: localStorage.getItem('roundId'),
-		pass: pass,
-		fail: fail,
-		demand: demand
+        teamId: localStorage.getItem('teamId'),
+        round: localStorage.getItem('round'),
+        delivery: localStorage.getItem('delivery'),
+        demand: demand,
+        pass: pass,
+        fail: fail,
       },
       success: function(data) {
           addDeliveryRow();
@@ -94,7 +74,7 @@ function addDeliveryRow() {
     var row = table.insertRow(-1);
     var cellRP = row.insertCell(0);
     var cellRF = row.insertCell(1);
-    var cellRT = row.insertCell(2);
+    var cellRD = row.insertCell(2);
     var cellBtn = row.insertCell(3);
 
     var inputRP = document.createElement("INPUT");
@@ -107,8 +87,7 @@ function addDeliveryRow() {
 
     var inputRT = document.createElement("INPUT");
     inputRT.setAttribute("type", "text");
-    inputRT.setAttribute("id", "r" + localStorage.delivery + "t");
-    inputRT.setAttribute("disabled", "disabled");
+    inputRT.setAttribute("id", "r" + localStorage.delivery + "d");
 
     var inputBtn = document.createElement("BUTTON");
     inputBtn.setAttribute("class", "addBtn");
@@ -118,7 +97,7 @@ function addDeliveryRow() {
 
     cellRP.appendChild(inputRP);
     cellRF.appendChild(inputRF);
-    cellRT.appendChild(inputRT);
+    cellRD.appendChild(inputRT);
     cellBtn.appendChild(inputBtn);
 
 }
@@ -126,5 +105,6 @@ function addDeliveryRow() {
 function addRound(){
     $('input[type=text]').val("");
     localStorage.round++;
+    localStorage.delivery = 1;
     location.reload();
 }

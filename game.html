@@ -13,7 +13,6 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-	  <script type="text/javascript"> window.onload = insertRound();</script>
   </head>
 <body>
 	<h1 id="roundTitle"></h1>
@@ -25,15 +24,15 @@
 
   <table id="deliveryTable" class="table">
       <tr>
+          <th>Geforderte Lieferungen</th>
           <th>Lieferungen Gut</th>
           <th>Lieferungen Ausschuss</th>
-          <th>Lieferungen Total</th>
           <th></th>
       </tr>
       <tr>
+        <td><input type="text" id="r1d" value=""></td>
         <td><input type="text" id="r1p" value=""></td>
         <td><input type="text" id="r1f" value=""></td>
-        <td><input type="text" id="r1t" value="" disabled></td>
         <td><button class="addBtn" onclick="insertDelivery()">Hinzufügen</button></td>
       </tr>
   </table>

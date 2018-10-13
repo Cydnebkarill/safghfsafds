@@ -10,12 +10,9 @@ switch ($_POST['func']){
 	break;
 	case 'insertTeam': insertTeam();
 	break;
-	case 'insertRound': insertRound();
-	break;
 	case 'insertDelivery': insertDelivery();
 	break;
 }
-
 
 function insertGame(){
 	$con = mysqli_connect(HOST,USER,PASS,DB);
@@ -24,7 +21,7 @@ function insertGame(){
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
 	$doz = $_POST['doz'];
-	$sql = "INSERT INTO Game (dozent) VALUES ('$doz')";
+	$sql = "INSERT INTO game (dozent) VALUES ('$doz')";
 	writeToDB($con, $sql);
 	mysqli_close($con);
 }
@@ -37,20 +34,7 @@ function insertTeam(){
 	}
 	$gameId = $_POST['gameId'];
 	$team = $_POST['teamName'];
-	$sql = "INSERT INTO Team (name, game) VALUES ('$team', '$gameId')";
-	writeToDB($con, $sql);
-	mysqli_close($con);
-}
-
-function insertRound(){
-	$con = mysqli_connect(HOST,USER,PASS,DB);
-	// Check connection
-	if (mysqli_connect_errno()){
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-	}
-	$teamId = $_POST['teamId'];
-	$round = $_POST['round'];
-	$sql = "INSERT INTO Round (round, team) VALUES ('$round', '$teamId')";
+	$sql = "INSERT INTO team (name, gameId) VALUES ('$team', '$gameId')";
 	writeToDB($con, $sql);
 	mysqli_close($con);
 }
@@ -61,12 +45,16 @@ function insertDelivery(){
 	if (mysqli_connect_errno()){
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
 	}
-	$roundId = $_POST['roundId'];
+
+	$teamId = $_POST['teamId'];
+	$actualRound = $_POST['round'];
+	$delivery = $_POST['delivery'];
 	$demand = $_POST['demand'];
 	$pass = $_POST['pass'];
 	$fail = $_POST['fail'];
 
-	$sql = "INSERT INTO Delivery (round, demand, pass, fail) VALUES ('$roundId', '$demand', '$pass', '$fail')";
+	$sql = "INSERT INTO delivery (teamId, actualRound, delivery, demand, pass, fail)
+	VALUES ('$teamId', '$actualRound', '$delivery', '$demand', '$pass', '$fail')";
 	writeToDB($con, $sql);
 	mysqli_close($con);
 }
