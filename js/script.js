@@ -1,3 +1,9 @@
+$(document).ready (function(){
+  $("#alertDelivery").hide();
+  $("#alertRound").hide();
+});
+
+
 function insertGame(){
   $.ajax({
       type: "POST",
@@ -58,7 +64,11 @@ function insertDelivery(){
         fail: fail,
       },
       success: function(data) {
-          addDeliveryRow();
+        $("#alertDelivery").fadeTo(1000, 500).slideUp(500, function(){
+          $("#alertDelivery").slideUp(500);
+        });
+        $("input").prop( "disabled", true)
+        addDeliveryRow();
       },
       error: function(data) {
         alert("Fehler: "+data.toString());
@@ -72,9 +82,9 @@ function addDeliveryRow() {
 
     var table = document.getElementById("deliveryTable");
     var row = table.insertRow(-1);
-    var cellRP = row.insertCell(0);
-    var cellRF = row.insertCell(1);
-    var cellRD = row.insertCell(2);
+    var cellRD = row.insertCell(0);
+    var cellRP = row.insertCell(1);
+    var cellRF = row.insertCell(2);
     var cellBtn = row.insertCell(3);
 
     var inputRP = document.createElement("INPUT");
@@ -106,5 +116,11 @@ function addRound(){
     $('input[type=text]').val("");
     localStorage.round++;
     localStorage.delivery = 1;
-    location.reload();
+    $("input").prop( "disabled", false);
+    $("#deliveryTable").find("tr:gt(1)").remove();
+    $('.addBtn').prop('disabled', false);
+    $("#roundTitle").html("Runde " + localStorage.round);
+    $("#alertRound").fadeTo(1000, 500).slideUp(500, function(){
+    $("#alertRound").slideUp(500);
+    });
 }

@@ -15,12 +15,9 @@
     <script type="text/javascript" src="js/script.js"></script>
   </head>
 <body>
-	<h1 id="roundTitle"></h1>
+	<h1 id="roundTitle">Runde 1</h1>
 
-  <div class="alert alert-success alert-dismissable">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> Indicates a successful or positive action.
-  </div>
+
 
   <table id="deliveryTable" class="table">
       <tr>
@@ -37,6 +34,17 @@
       </tr>
   </table>
   <hr>
+
+  <div id="alertDelivery" class="alert alert-success alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Lieferung gespeichert</strong>
+  </div>
+
+  <div id="alertRound" class="alert alert-success alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Neue Runde gestartet</strong>
+  </div>
+
   <button onclick="addRound()">Neue Runde</button>
 </body>
 </html>
