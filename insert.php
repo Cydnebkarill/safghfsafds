@@ -12,6 +12,8 @@ switch ($_POST['func']){
 	break;
 	case 'insertDelivery': insertDelivery();
 	break;
+	case 'insertDeliveryAmount': insertDeliveryAmount();
+	break;
 }
 
 function insertGame(){
@@ -59,6 +61,23 @@ function insertDelivery(){
 	mysqli_close($con);
 }
 
+function insertDeliveryAmount(){
+	$con = mysqli_connect(HOST,USER,PASS,DB);
+	// Check connection
+	if (mysqli_connect_errno()){
+		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+	}
+	$game = $_POST['game'];
+	$aRound = $_POST['aRound'];
+	$delivery = $_POST['delivery'];
+	$deliveryAmount = $_POST['deliveryAmount'];
+	$sql = "INSERT INTO deliveryamount (game, aRound, delivery, deliveryAmount) 
+	VALUES ('$game', '$aRound', '$delivery', '$deliveryAmount')";
+	writeToDB($con, $sql);
+	mysqli_close($con);
+}
+
+
 function writeToDB($con, $sql){
 	if(mysqli_query($con,$sql)){
 		// Print auto-generated id
@@ -68,5 +87,6 @@ function writeToDB($con, $sql){
 		echo("Error description: " . mysqli_error($con));
 	}
 }
+
 
 ?>

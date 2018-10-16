@@ -13,13 +13,56 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
   </head>
 <body>
 <h1>Neue Simulation erstellen</h1>
+<div>
   <input type="text" id="dozent" placeholder="Kürzel eingeben"/>
-  <input class="button" type="submit" onclick="insertGame()" value="Erstellen"/>
+  <button onclick="insertGame()" >Erstellen</button>
   <label id="gameUrl">Die Spiel-ID lautet: </label>
+</div>
+
+<br/> <!-- entfernen nach funktionalitätsversion-->
+
+<div id="deliverySection">
+  <table id="deliveryTable" class="table">
+      <tr>
+          <th>Runde</th>
+          <th>Lieferung</th>
+          <th>Anzahl Lieferungen</th>
+          <th></th>
+      </tr>
+      <tr>
+        <td><label id="round">1</label></td>
+        <td><label id="delivery">1</label></td>
+        <td><input class="inputTable" type="text" id="deliveryAmount1" value=""></td>
+        <td><button class="inputTable addBtn" onclick="insertDeliveryAmount()">Speichern</button></td>
+      </tr>
+  </table>
+  <hr>
+</div>
+
+<button onclick="addRound()">Neue Runde</button>
+
+<div id="alertDelivery" class="alert alert-success alert-dismissable">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Lieferung gespeichert</strong>
+</div>
+
+<div id="alertRound" class="alert alert-success alert-dismissable">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Neue Runde Erstellt</strong>
+</div>
+
+
+
+<div>
+  <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+
+
 
 </body>
 </html>

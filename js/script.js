@@ -5,6 +5,8 @@ $(document).ready (function(){
 
 
 function insertGame(){
+  localStorage.round = 0;
+  localStorage.delivery = 1;
   $.ajax({
       type: "POST",
       dataType: "text",
@@ -15,6 +17,8 @@ function insertGame(){
       },
       success: function(data) {
         $("#gameUrl").html("Die Spiel-ID lautet: " + data.toString());
+        localStorage.game = data.toString();
+        addRound();
       },
       error: function(data) {
         alert("Fehler: "+ data.toString());
@@ -109,12 +113,12 @@ function addDeliveryRow() {
     cellRF.appendChild(inputRF);
     cellRD.appendChild(inputRT);
     cellBtn.appendChild(inputBtn);
-
 }
 
 function addRound(){
-    $('input[type=text]').val("");
+    $('td input[type=text]').val("");
     localStorage.round++;
+    $("#round").html(localStorage.round);
     localStorage.delivery = 1;
     $("input").prop( "disabled", false);
     $("#deliveryTable").find("tr:gt(1)").remove();
@@ -123,4 +127,69 @@ function addRound(){
     $("#alertRound").fadeTo(1000, 500).slideUp(500, function(){
     $("#alertRound").slideUp(500);
     });
+}
+
+function insertDeliveryAmount(){
+  deliveryAmount = parseInt($("#deliveryAmount" + localStorage.delivery + "").val());
+
+	$.ajax({
+      type: "POST",
+      dataType: "text",
+      url: "insert.php",
+      data: {
+        func: "insertDeliveryAmount",
+        game: localStorage.getItem('game'),
+        aRound: localStorage.getItem('round'),
+        delivery: localStorage.getItem('delivery'),
+        deliveryAmount: deliveryAmount
+      },
+      success: function(data) {
+        $("#alertDelivery").fadeTo(1000, 500).slideUp(500, function(){
+          $("#alertDelivery").slideUp(500);
+        });
+        $(".inputTable").prop( "disabled", true);
+        localStorage.delivery ++;
+        addDeliveryRowTeacher();
+      },
+      error: function(data) {
+        alert("Fehler: "+data.toString());
+      }
+    });
+}
+
+function addDeliveryRowTeacher() {
+  $('.addBtn').prop('disabled', true);
+
+  var table = document.getElementById("deliveryTable");
+  var row = table.insertRow(-1);
+  var cellRound = row.insertCell(0);
+  var cellDelivery = row.insertCell(1);
+  var cellDeliveryAmount = row.insertCell(2);
+  var cellBtn = row.insertCell(3);
+
+  var inputRound = document.createElement("LABEL");
+  inputRound.setAttribute("id", "game" + localStorage.round + "");
+  var text = document.createTextNode(localStorage.round);
+  inputRound.appendChild(text);
+
+  var inputDelivery = document.createElement("LABEL");
+  inputDelivery.setAttribute("id", "round" + localStorage.delivery + "");
+  var text = document.createTextNode(localStorage.delivery);
+  inputDelivery.appendChild(text);
+
+  var inputDeliveryAmount = document.createElement("INPUT");
+  inputDeliveryAmount.setAttribute("class", "inputTable");
+  inputDeliveryAmount.setAttribute("type", "text");
+  inputDeliveryAmount.setAttribute("id", "deliveryAmount" + localStorage.delivery + "");
+
+  var inputBtn = document.createElement("BUTTON");
+  inputBtn.setAttribute("class", "addBtn");
+  inputBtn.setAttribute("onclick", "insertDeliveryAmount()");
+  var text = document.createTextNode("Speichern");
+  inputBtn.appendChild(text);
+
+  cellRound.appendChild(inputRound);
+  cellDelivery.appendChild(inputDelivery);
+  cellDeliveryAmount.appendChild(inputDeliveryAmount);
+  cellBtn.appendChild(inputBtn);
 }
