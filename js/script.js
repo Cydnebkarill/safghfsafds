@@ -193,3 +193,58 @@ function addDeliveryRowTeacher() {
   cellDeliveryAmount.appendChild(inputDeliveryAmount);
   cellBtn.appendChild(inputBtn);
 }
+
+
+function createChart() {
+  var labels = ["january", "february", "march","april","may","june","july"];
+  var test2 = [0, 10, 5, 2, 20, 30, 45];
+
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "My First dataset",
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: test2,
+        }]
+    },
+
+    // Configuration options go here
+    options: {
+        responsive: false,
+        maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+}
+
+async function postLevel1(){
+  const level1 = await getDelivery();
+  alert(JSON.stringify(level1));
+	for (const s of level1){
+		$("#content").append(s[0]);
+  }
+}
+
+async function getDelivery() {
+	return $.ajax({
+		type: "POST",
+		dataType: "json",
+		url: "output.php",
+		data: {
+			func: "getDelivery"
+		}
+    });
+}
